@@ -4,6 +4,7 @@ use std::thread;
 use std::collections::VecDeque;
 use std::sync::{Arc,RwLock};
 use futures::{Future, Poll, Async};
+use futures::task;
 
 #[derive(Clone, Debug)]
 struct FutureQueue<T> {
@@ -27,6 +28,7 @@ impl<T> Future for DequeueFuture<T> {
   fn poll(&mut self) -> Poll<Self::Item, Self::Error> {
     // TODO
     println!("POLL");
+    task::park().unpark();
     Ok(Async::NotReady)
   }
 }
